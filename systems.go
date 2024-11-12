@@ -30,6 +30,7 @@ func Gravitation(y *mgl64.VecN, dy *mgl64.VecN) {
 			f := p1.ForceV(&p2)
 			fp1 := f.Mul(1.0 / p1.Mass)
 			fp2 := f.Mul(-1.0 / p2.Mass)
+			//println(fp1[0], fp1[1], fp1[2])
 
 			VecNFromVec3(dy, fp1, i+offsetVel)
 			VecNFromVec3(dy, fp2, j+offsetVel)
