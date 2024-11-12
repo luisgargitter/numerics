@@ -6,24 +6,18 @@ import (
 )
 
 func main() {
-	p1 := Particle{mgl64.Vec3{0, 0, 0}, mgl64.Vec3{-0.001, 0, 0}, 1000000.0, 0.0}
-	p2 := Particle{mgl64.Vec3{1, 0, 0}, mgl64.Vec3{0, 0.01, 0}, 10.0, 0.0}
+	p1 := Particle{mgl64.Vec3{0, 0, 0}, mgl64.Vec3{-0.0001, 0, 0}, 10000.0, 0.0}
+	p2 := Particle{mgl64.Vec3{1, 0, 0}, mgl64.Vec3{0, 0.001, 0}, 10.0, 0.0}
 
-	y := mgl64.NewVecN(7 * 2)
-
-	VecNFromVec3(y, p1.Position, 0)
-	VecNFromVec3(y, p1.Velocity, 3)
-	y.Set(6, p1.Mass)
-
-	VecNFromVec3(y, p2.Position, 7+0)
-	VecNFromVec3(y, p2.Velocity, 7+3)
-	y.Set(7+6, p2.Mass)
+	y := ParticlesToVecN([]Particle{p1, p2})
 
 	rk4w := NewRK4Workspace(y.Size())
 
 	for i := 0; i < 200; i += 1 {
-		RK4(rk4w, Gravitation, 50, y, y)
-		fmt.Printf("%f, %f, %f, %f, %f, %f\n",
-			y.Get(0), y.Get(1), y.Get(2), y.Get(7), y.Get(8), y.Get(9))
+		RK4(rk4w, dParticleSystem, 50, y, y)
+		objs := VecNToParticles(y)
+		p1 := objs[0].Position
+		p2 := objs[1].Position
+		fmt.Printf("%f, %f, %f, %f, %f, %f\n", p1[0], p1[1], p1[2], p2[0], p2[1], p2[2])
 	}
 }
