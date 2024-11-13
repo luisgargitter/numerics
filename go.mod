@@ -1,4 +1,4 @@
-module numerics
+module github.com/luisgargitter/numerics
 
 go 1.18
 
