@@ -1,4 +1,4 @@
-package main
+package numerics
 
 import (
 	"github.com/go-gl/mathgl/mgl64"

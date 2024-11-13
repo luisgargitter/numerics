@@ -1,10 +1,8 @@
-package main
+package numerics
 
 import (
 	"github.com/go-gl/mathgl/mgl64"
 )
-
-type DifferentialEquationSystem func(y *mgl64.VecN, dy *mgl64.VecN)
 
 // Runge Kutta 4
 type RK4Workspace struct {
@@ -26,7 +24,7 @@ func NewRK4Workspace(n int) *RK4Workspace {
 	return &rk4w
 }
 
-func RK4(w *RK4Workspace, f DifferentialEquationSystem, dt float64, y0 *mgl64.VecN, y *mgl64.VecN) {
+func RK4(w *RK4Workspace, f System, dt float64, y0 *mgl64.VecN, y *mgl64.VecN) {
 	d, k1, k2, k3, k4 := w.d, w.k1, w.k2, w.k3, w.k4
 	f(y0, k1)
 
