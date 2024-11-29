@@ -1,3 +1,3 @@
 package numerics
 
-type System[V Vector] func(x V, y *V)
+type System[T any] func(x *T, y *T)
