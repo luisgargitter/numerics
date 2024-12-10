@@ -21,5 +21,10 @@ func RK4[T any](w *RK4Workspace[T], f System[T], dt float64, y0 *T, y *T) {
 	f(w.Add(&w.D, y0, w.Mul(&w.D, &w.K3, dt)), &w.K4)
 
 	// y = y0 + (h/6)(K1 + 2*K2 + 2*K3 + K4)
-	y = w.Add(y, y0, w.Mul(&w.D, w.Add(&w.D, w.Mul(&w.D, w.Add(&w.D, &w.K2, &w.K3), 2.0), w.Add(&w.D, &w.K1, &w.K4)), dt/6.0))
+	w.Add(&w.D, &w.K2, &w.K3)
+	w.Mul(&w.D, &w.D, 2.0)
+	w.Add(&w.D, &w.D, &w.K1)
+	w.Add(&w.D, &w.D, &w.K4)
+	w.Mul(&w.D, &w.D, dt/6.0)
+	y = w.Add(y, y0, &w.D)
 }
